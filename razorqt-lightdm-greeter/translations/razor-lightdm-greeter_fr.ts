@@ -3,11 +3,11 @@
     <name>LoginForm</name>
     <message>
         <source>user id</source>
-        <translation>compte d&apos;utilisateur</translation>
+        <translation>Compte d&apos;utilisateur</translation>
     </message>
     <message>
         <source>password</source>
-        <translation>mot de passe</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Login</source>
