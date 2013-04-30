@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
-    <height>558</height>
+    <width>324</width>
+    <height>539</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -149,19 +149,6 @@
          <widget class="QPushButton" name="chooseColourButton">
           <property name="text">
            <string>Choose colour</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="colourLabel">
-          <property name="text">
-           <string>12:34:56</string>
-          </property>
-          <property name="textFormat">
-           <enum>Qt::RichText</enum>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>

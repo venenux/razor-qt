@@ -284,12 +284,10 @@ void RazorClockConfiguration::updateColourBox()
     if (ui->defaultColourCB->isChecked())
     {
         ui->chooseColourButton->setEnabled(false);
-        ui->colourLabel->setText("12:34:56");
     }
     else
     {
         ui->chooseColourButton->setEnabled(true);
-        ui->colourLabel->setText("<font color=" + mColour.name() + ">" + "12:34:56" + "</font>");
     }
 }
 
