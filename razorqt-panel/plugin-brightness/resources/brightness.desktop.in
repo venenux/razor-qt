@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=RazorPanel/Plugin
+Name=Brightness
+Comment=Control the brightness of you monitor
+
+#TRANSLATIONS_DIR=../translations

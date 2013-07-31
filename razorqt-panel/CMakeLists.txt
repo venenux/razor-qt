@@ -45,6 +45,8 @@ setByDefault(WORLDCLOCK_PLUGIN     Yes)
 setByDefault(TEATIME_PLUGIN        No)
 
 setByDefault(DOM_PLUGIN            Yes)
+
+setByDefault(BRIGHTNESS_PLUGIN     Yes)
 # *******************************************************************
 
 
@@ -72,6 +74,11 @@ add_subdirectory(panel)
 
 
 set(ENABLED_PLUGINS)
+
+if (BRIGHTNESS_PLUGIN)
+    set(ENABLED_PLUGINS ${ENABLED_PLUGINS}   "Brightness")
+    add_subdirectory(plugin-brightness)
+endif (BRIGHTNESS_PLUGIN)
 
 if (CLOCK_PLUGIN)
   set(ENABLED_PLUGINS ${ENABLED_PLUGINS}  "Clock")
