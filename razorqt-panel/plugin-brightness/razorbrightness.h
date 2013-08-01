@@ -29,11 +29,11 @@
 #define RAZORBRIGHTNESS_H
 
 #include "../panel/irazorpanelplugin.h"
-#include <QtGui/QToolButton>
+//#include <QtGui/QToolButton>
 
 #include <QtGui/QSlider>
 
-//class BrightnessButton;
+class BrightnessButton;
 class RazorNotification;
 /*namespace GlobalKeyShortcut
 {
@@ -50,7 +50,7 @@ class RazorBrightness : public QObject, public IRazorPanelPlugin
 		virtual QWidget *widget();
 		virtual QString themeId() const { return "Brightness"; }
 		virtual IRazorPanelPlugin::Flags flags() const { return PreferRightAlignment | HaveConfigDialog ; }
-		//void realign();
+		void realign();
 		//QDialog *configureDialog();
 
 	protected slots:
@@ -58,8 +58,7 @@ class RazorBrightness : public QObject, public IRazorPanelPlugin
 		void showMessage();
 
 	private:
-		//BrightnessButton *m_brightnessButton;
-		QToolButton mButton;
+		BrightnessButton *m_brightnessButton;
 		RazorNotification *m_notification;
 };
 

@@ -27,11 +27,10 @@
 
 #include "razorbrightness.h"
 
-//#include "brightnessbutton.h"
-//#include "brightnesspopup.h"
+#include "brightnessbutton.h"
+#include "brightnesspopup.h"
 //#include "razorbrightnessconfiguration.h"
 
-#include <QtGui/QMessageBox>
 #include <QtDebug>
 #include <qtxdg/xdgicon.h>
 #include <razorqt/razornotification.h>
@@ -42,26 +41,20 @@ RazorBrightness::RazorBrightness(const IRazorPanelPluginStartupInfo &startupInfo
         QObject(),
         IRazorPanelPlugin(startupInfo)
 {
-    //m_brightnessButton = new BrightnessButton(this);
+    m_brightnessButton = new BrightnessButton(this);
 
     m_notification = new RazorNotification("", this);
 
 		setObjectName("Brightness");
-		mButton.setIcon(XdgIcon::fromTheme(QStringList() << "display-brightness"));
+
 		//addWidget(&mButton);
-		connect(&mButton, SIGNAL(clicked()), this, SLOT(showMessage()));
 
     settingsChanged();
 }
 
 RazorBrightness::~RazorBrightness()
 {
-    //delete m_brightnessButton;
-}
-
-void RazorBrightness::showMessage()
-{
-	QMessageBox::information(0, tr("Panel"), tr("Brightness!"));
+    delete m_brightnessButton;
 }
 
 void RazorBrightness::settingsChanged()
@@ -74,16 +67,15 @@ void RazorBrightness::settingsChanged()
 
 QWidget *RazorBrightness::widget()
 {
-    //return m_volumeButton;
-		return &mButton;
+    return m_brightnessButton;
 }
 
-/*void RazorVolume::realign()
+void RazorBrightness::realign()
 {
-    m_volumeButton->hideVolumeSlider();
+    m_brightnessButton->hideBrightnessSlider();
 }
 
-QDialog *RazorVolume::configureDialog()
+/*QDialog *RazorVolume::configureDialog()
 {
     RazorVolumeConfiguration *configWindow = new RazorVolumeConfiguration(*settings());
     configWindow->setAttribute(Qt::WA_DeleteOnClose, true);
