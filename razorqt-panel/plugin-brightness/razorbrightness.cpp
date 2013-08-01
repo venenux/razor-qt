@@ -72,7 +72,7 @@ void RazorBrightness::settingsChanged()
     m_volumeButton->volumePopup()->setSliderStep(settings()->value(SETTINGS_STEP, SETTINGS_DEFAULT_STEP).toInt());*/
 }
 
-QWidget *RazorVolume::widget()
+QWidget *RazorBrightness::widget()
 {
     //return m_volumeButton;
 		return &mButton;
