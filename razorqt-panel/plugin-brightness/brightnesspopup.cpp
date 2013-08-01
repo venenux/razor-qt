@@ -26,6 +26,7 @@
  * END_COMMON_COPYRIGHT_HEADER */
 
 #include "brightnesspopup.h"
+#include "backlight.h"
 
 #include <qtxdg/xdgicon.h>
 
@@ -40,7 +41,8 @@
 BrightnessPopup::BrightnessPopup(QWidget* parent):
     QDialog(parent, Qt::Dialog | Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint),
     m_pos(0,0),
-    m_anchor(Qt::TopLeftCorner)
+    m_anchor(Qt::TopLeftCorner),
+		m_backlight(0)
 {
     m_brightnessSlider = new QSlider(Qt::Vertical, this);
     m_brightnessSlider->setTickPosition(QSlider::TicksBothSides);
@@ -55,6 +57,28 @@ BrightnessPopup::BrightnessPopup(QWidget* parent):
     connect(m_brightnessSlider, SIGNAL(valueChanged(int)), this, SLOT(handleSliderValueChanged(int)));
 }
 
+void BrightnessPopup::setBacklight(Backlight* backlight)
+{
+	if ( m_backlight == backlight )
+		return;
+
+	if ( m_backlight )
+		disconnect(m_backlight);
+
+	m_backlight = backlight;
+
+	if ( m_backlight )
+	{
+		qDebug() << "Max:" << m_backlight->getMaxBrightness();
+		qDebug() << "Cur:" << m_backlight->getCurBrightness();
+		m_brightnessSlider->setMaximum(m_backlight->getMaxBrightness());
+		m_brightnessSlider->setValue(m_backlight->getCurBrightness());
+
+		//TODO: handle changes in the device brightness
+	}
+
+}
+
 void BrightnessPopup::enterEvent(QEvent *event)
 {
     emit mouseEntered();
@@ -67,11 +91,14 @@ void BrightnessPopup::leaveEvent(QEvent *event)
 
 void BrightnessPopup::handleSliderValueChanged(int value)
 {
+		if ( m_backlight )
+			m_backlight->setCurBrightness(value);
 }
 
 void BrightnessPopup::handleDeviceBrightnessChanged(int brightness)
 {
     m_brightnessSlider->setValue(brightness);
+    //updateStockIcon();
 }
 
 void BrightnessPopup::resizeEvent(QResizeEvent *event)

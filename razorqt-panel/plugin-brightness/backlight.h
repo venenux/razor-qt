@@ -25,51 +25,27 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#ifndef BRIGHTNESSPOPUP_H
-#define BRIGHTNESSPOPUP_H
+#ifndef BACKLIGHT_H
+#define BACKLIGHT_H
 
-#include <QtGui/QDialog>
+#include <QtCore/QObject>
 
-class QSlider;
-class QPushButton;
-class QLabel;
-class Backlight;
-
-class BrightnessPopup : public QDialog
+class Backlight : public QObject
 {
-    Q_OBJECT
+		Q_OBJECT
+		Q_PROPERTY(int brightness READ getCurBrightness WRITE setCurBrightness)
+
 public:
-    BrightnessPopup(QWidget* parent = 0);
+		Backlight(QString name, QObject *parent = 0);
+		~Backlight();
 
-    void open(QPoint pos, Qt::Corner anchor);
-    void handleWheelEvent(QWheelEvent *event);
-
-    QSlider *brightnessSlider() const { return m_brightnessSlider; }
-
-		void setBacklight(Backlight *backlight);
-
-signals:
-    void mouseEntered();
-    void mouseLeft();
-
-    void brightnessChanged(int value);
+		QString getName() { return m_dpy_name; }
+		int getMaxBrightness();
+		int getCurBrightness();
+		void setCurBrightness(int brightness);
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-    void enterEvent(QEvent *event);
-    void leaveEvent(QEvent *event);
-
-private slots:
-    void handleSliderValueChanged(int value);
-    void handleDeviceBrightnessChanged(int brightness);
-
-private:
-    void realign();
-
-    QSlider *m_brightnessSlider;
-    QPoint m_pos;
-    Qt::Corner m_anchor;
-		Backlight *m_backlight;
+	char    *m_dpy_name = NULL;
 };
 
-#endif // BRIGHTNESSPOPUP_H
+#endif // BACKLIGHT_H

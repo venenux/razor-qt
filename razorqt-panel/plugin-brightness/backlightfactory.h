@@ -25,51 +25,26 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#ifndef BRIGHTNESSPOPUP_H
-#define BRIGHTNESSPOPUP_H
+#ifndef BACKLIGHTFACTORY_H
+#define BACKLIGHTFACTORY_H
 
-#include <QtGui/QDialog>
+#include <QtCore/QObject>
+#include <QtCore/QList>
 
-class QSlider;
-class QPushButton;
-class QLabel;
-class Backlight;
+#include "backlight.h"
 
-class BrightnessPopup : public QDialog
+class BacklightFactory : public QObject
 {
-    Q_OBJECT
+		Q_OBJECT
+
 public:
-    BrightnessPopup(QWidget* parent = 0);
+		BacklightFactory(QObject *parent = 0);
+		~BacklightFactory();
 
-    void open(QPoint pos, Qt::Corner anchor);
-    void handleWheelEvent(QWheelEvent *event);
-
-    QSlider *brightnessSlider() const { return m_brightnessSlider; }
-
-		void setBacklight(Backlight *backlight);
-
-signals:
-    void mouseEntered();
-    void mouseLeft();
-
-    void brightnessChanged(int value);
+		const QList<Backlight*> &devices() const { return m_devices; }
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-    void enterEvent(QEvent *event);
-    void leaveEvent(QEvent *event);
-
-private slots:
-    void handleSliderValueChanged(int value);
-    void handleDeviceBrightnessChanged(int brightness);
-
-private:
-    void realign();
-
-    QSlider *m_brightnessSlider;
-    QPoint m_pos;
-    Qt::Corner m_anchor;
-		Backlight *m_backlight;
+		QList<Backlight*> m_devices;
 };
 
-#endif // BRIGHTNESSPOPUP_H
+#endif // BACKLIGHTFACTORY_H

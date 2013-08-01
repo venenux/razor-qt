@@ -28,6 +28,7 @@
 #include "razorbrightness.h"
 
 #include "brightnessbutton.h"
+#include "backlightfactory.h"
 #include "brightnesspopup.h"
 //#include "razorbrightnessconfiguration.h"
 
@@ -47,6 +48,12 @@ RazorBrightness::RazorBrightness(const IRazorPanelPluginStartupInfo &startupInfo
 
 		setObjectName("Brightness");
 
+		qDebug() << "Looking for backlight devices.";
+		BacklightFactory factory;
+		if ( factory.devices().size() > 0 )
+		{
+			m_brightnessButton->brightnessPopup()->setBacklight(factory.devices().first());
+		}
 		//addWidget(&mButton);
 
     settingsChanged();

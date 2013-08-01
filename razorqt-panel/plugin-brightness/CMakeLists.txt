@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 2.6)
 set(PLUGIN "brightness")
 
 set(HEADERS
+		backlight.h
+		backlightfactory.h
 		brightnessbutton.h
 		brightnesspopup.h
     razorbrightness.h
@@ -10,6 +12,8 @@ set(HEADERS
 )
 
 set(SOURCES
+		backlight.cpp
+		backlightfactory.cpp
 		brightnessbutton.cpp
 		brightnesspopup.cpp
     razorbrightness.cpp
@@ -17,6 +21,8 @@ set(SOURCES
 )
 
 set(MOCS
+		backlight.h
+		backlightfactory.h
 		brightnessbutton.h
 		brightnesspopup.h
     razorbrightness.h
@@ -26,6 +32,9 @@ set(MOCS
 set(UIS
     #razorbrightnessconfiguration.ui
 )
+
+message("brightness: ${X11_LIB} ${XRANDR_LIB}")
+LINK_LIBRARIES(${PLUGIN} ${X11_LIB} "/usr/lib/libXrandr.so.2")
 
 #*******************************************
 include ("../BuildPlugin.cmake")
