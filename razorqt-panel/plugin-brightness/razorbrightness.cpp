@@ -47,7 +47,7 @@ RazorBrightness::RazorBrightness(const IRazorPanelPluginStartupInfo &startupInfo
     m_notification = new RazorNotification("", this);
 
 		setObjectName("Brightness");
-		mButton.setText(tr("HW"));
+		mButton.setIcon(XdgIcon::fromTheme(QStringList() << "display-brightness"));
 		//addWidget(&mButton);
 		connect(&mButton, SIGNAL(clicked()), this, SLOT(showMessage()));
 

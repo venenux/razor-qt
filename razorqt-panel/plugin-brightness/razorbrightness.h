@@ -33,8 +33,6 @@
 
 #include <QtGui/QSlider>
 
-#include <QtGui/QPushButton> //TODO: remove
-
 //class BrightnessButton;
 class RazorNotification;
 /*namespace GlobalKeyShortcut
@@ -61,7 +59,7 @@ class RazorBrightness : public QObject, public IRazorPanelPlugin
 
 	private:
 		//BrightnessButton *m_brightnessButton;
-		QPushButton mButton;
+		QToolButton mButton;
 		RazorNotification *m_notification;
 };
 
