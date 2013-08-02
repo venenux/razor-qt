@@ -35,10 +35,10 @@
 
 class BrightnessButton;
 class RazorNotification;
-/*namespace GlobalKeyShortcut
+namespace GlobalKeyShortcut
 {
 class Action;
-}*/
+}
 
 class RazorBrightness : public QObject, public IRazorPanelPlugin
 {
@@ -60,6 +60,8 @@ class RazorBrightness : public QObject, public IRazorPanelPlugin
 	private:
 		BrightnessButton *m_brightnessButton;
 		RazorNotification *m_notification;
+    GlobalKeyShortcut::Action *m_keyBrightnessUp;
+    GlobalKeyShortcut::Action *m_keyBrightnessDown;
 };
 
 

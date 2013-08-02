@@ -34,7 +34,11 @@
 
 #include <QtDebug>
 #include <qtxdg/xdgicon.h>
+#include <razor-global-key-shortcuts-client/razor-global-key-shortcuts-client.h>
 #include <razorqt/razornotification.h>
+
+#define DEFAULT_UP_SHORTCUT "XF86MonBrightnessUp"
+#define DEFAULT_DOWN_SHORTCUT "XF86MonBrightnessDown"
 
 Q_EXPORT_PLUGIN2(brightness, RazorBrightnessPluginLibrary)
 
@@ -46,6 +50,9 @@ RazorBrightness::RazorBrightness(const IRazorPanelPluginStartupInfo &startupInfo
 
     m_notification = new RazorNotification("", this);
 
+    // global key shortcuts
+    QString shortcutNotRegistered = "";
+
 		setObjectName("Brightness");
 
 		qDebug() << "Looking for backlight devices.";
@@ -55,6 +62,44 @@ RazorBrightness::RazorBrightness(const IRazorPanelPluginStartupInfo &startupInfo
 			m_brightnessButton->brightnessPopup()->setBacklight(factory.devices().first());
 		}
 		//addWidget(&mButton);
+    m_keyBrightnessUp = GlobalKeyShortcut::Client::instance()->addAction(QString(), QString("/panel/%1/up").arg(settings()->group()), tr("Increase display brightness"), this);
+    if (m_keyBrightnessUp)
+    {
+        connect(m_keyBrightnessUp, SIGNAL(activated()), m_brightnessButton->brightnessPopup(), SLOT(handleDeviceBrightnessChanged()));
+
+        if (m_keyBrightnessUp->shortcut().isEmpty())
+        {
+            m_keyBrightnessUp->changeShortcut(DEFAULT_UP_SHORTCUT);
+            if (m_keyBrightnessUp->shortcut().isEmpty())
+            {
+                shortcutNotRegistered = " '" DEFAULT_UP_SHORTCUT "'";
+            }
+        }
+    }
+
+    m_keyBrightnessDown = GlobalKeyShortcut::Client::instance()->addAction(QString(), QString("/panel/%1/down").arg(settings()->group()), tr("Decrease display brightness"), this);
+    if (m_keyBrightnessDown)
+    {
+        connect(m_keyBrightnessDown, SIGNAL(activated()), m_brightnessButton->brightnessPopup(), SLOT(handleDeviceBrightnessChanged()));
+
+        if (m_keyBrightnessDown->shortcut().isEmpty())
+        {
+            m_keyBrightnessDown->changeShortcut(DEFAULT_DOWN_SHORTCUT);
+            if (m_keyBrightnessDown->shortcut().isEmpty())
+            {
+                shortcutNotRegistered += " '" DEFAULT_DOWN_SHORTCUT "'";
+            }
+        }
+    }
+
+    if(!shortcutNotRegistered.isEmpty())
+    {
+        m_notification->setSummary(tr("Brightness Control: The following shortcuts can not be registered: %1").arg(shortcutNotRegistered));
+        m_notification->update();
+    }
+    
+    m_notification->setTimeout(1000);
+    m_notification->setUrgencyHint(RazorNotification::UrgencyLow);
 
     settingsChanged();
 }

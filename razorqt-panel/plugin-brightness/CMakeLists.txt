@@ -36,6 +36,8 @@ set(UIS
 message("brightness: ${X11_LIB} ${XRANDR_LIB}")
 LINK_LIBRARIES(${PLUGIN} ${X11_LIB} "/usr/lib/libXrandr.so.2")
 
+set(LIBRARIES ${LIBRARIES} razor-global-key-shortcuts-client )
+
 #*******************************************
 include ("../BuildPlugin.cmake")
 BUILD_RAZOR_PLUGIN(${PLUGIN})
