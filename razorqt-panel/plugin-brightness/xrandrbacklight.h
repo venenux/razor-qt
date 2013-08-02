@@ -25,17 +25,28 @@
  *
  * END_COMMON_COPYRIGHT_HEADER */
 
-#include <QtCore/QDebug>
+#ifndef XRANDRBACKLIGHT_H
+#define XRANDRBACKLIGHT_H
 
-#include "unistd.h"
+#include <QtCore/QObject>
 
 #include "backlight.h"
 
-Backlight::Backlight(QString name, QObject *parent)
-	: QObject(parent)
+class XrandrBacklight : public Backlight
 {
-}
+	Q_OBJECT
 
-Backlight::~Backlight()
-{
-}
+public:
+		XrandrBacklight(QString name = "", QObject *parent = 0);
+		~XrandrBacklight();
+
+		QString getName() { return "xrandr"; }
+		int getMaxBrightness();
+		int getCurBrightness();
+		void setCurBrightness(int brightness);
+
+protected:
+		char    *m_dpy_name = NULL;
+};
+
+#endif // BACKLIGHT_H

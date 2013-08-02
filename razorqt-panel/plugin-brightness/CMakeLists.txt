@@ -4,6 +4,7 @@ set(PLUGIN "brightness")
 
 set(HEADERS
 		backlight.h
+		xrandrbacklight.h
 		backlightfactory.h
 		brightnessbutton.h
 		brightnesspopup.h
@@ -13,6 +14,7 @@ set(HEADERS
 
 set(SOURCES
 		backlight.cpp
+		xrandrbacklight.cpp
 		backlightfactory.cpp
 		brightnessbutton.cpp
 		brightnesspopup.cpp
@@ -22,6 +24,7 @@ set(SOURCES
 
 set(MOCS
 		backlight.h
+		xrandrbacklight.h
 		backlightfactory.h
 		brightnessbutton.h
 		brightnesspopup.h

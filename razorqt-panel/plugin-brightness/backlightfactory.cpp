@@ -26,7 +26,10 @@
  * END_COMMON_COPYRIGHT_HEADER */
 
 #include "backlightfactory.h"
-#include "backlight.h"
+#include "xrandrbacklight.h"
+
+#define _GNU_SOURCES
+#include <dlfcn.h>
 
 #include <QtCore/QDir>
 #include <QtDebug>
@@ -34,16 +37,13 @@
 BacklightFactory::BacklightFactory(QObject *parent)
 	: QObject(parent)
 {
-	qDebug() << "foobar";
-	//search devices
-	QDir sys("/sys/class/backlight/");
-	QStringList devices = sys.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-
-	qDebug() << "Backlight found:" << devices;
-	foreach ( QString dev, devices )
-	{
-		m_devices.push_back(new Backlight(dev));
-	}
+	dlerror();
+	dlsym(RTLD_DEFAULT, "XRRGetOutputProperty");
+	char* error = dlerror();
+	if (error)
+		qDebug() << "Error:" << error;
+	else
+		m_devices.push_back(new XrandrBacklight());
 }
 
 BacklightFactory::~BacklightFactory()

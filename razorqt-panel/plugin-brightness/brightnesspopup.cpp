@@ -72,9 +72,9 @@ void BrightnessPopup::setBacklight(Backlight* backlight)
 		qDebug() << "Max:" << m_backlight->getMaxBrightness();
 		qDebug() << "Cur:" << m_backlight->getCurBrightness();
 		m_brightnessSlider->setMaximum(m_backlight->getMaxBrightness());
+		m_brightnessSlider->blockSignals(true);
 		m_brightnessSlider->setValue(m_backlight->getCurBrightness());
-
-		//TODO: handle changes in the device brightness
+		m_brightnessSlider->blockSignals(false);
 	}
 
 }
@@ -92,13 +92,18 @@ void BrightnessPopup::leaveEvent(QEvent *event)
 void BrightnessPopup::handleSliderValueChanged(int value)
 {
 		if ( m_backlight )
-			m_backlight->setCurBrightness(value);
+				m_backlight->setCurBrightness(value);
 }
 
 void BrightnessPopup::handleDeviceBrightnessChanged(int brightness)
 {
-    m_brightnessSlider->setValue(brightness);
-    //updateStockIcon();
+		if (brightness < 0 && m_backlight)
+				brightness = m_backlight->getCurBrightness();
+
+		m_brightnessSlider->blockSignals(true);
+		m_brightnessSlider->setValue(brightness);
+		m_brightnessSlider->blockSignals(false);
+		//updateStockIcon();
 }
 
 void BrightnessPopup::resizeEvent(QResizeEvent *event)

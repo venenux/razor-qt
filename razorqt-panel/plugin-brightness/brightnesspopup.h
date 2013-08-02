@@ -61,7 +61,7 @@ protected:
 
 private slots:
     void handleSliderValueChanged(int value);
-    void handleDeviceBrightnessChanged(int brightness);
+    void handleDeviceBrightnessChanged(int brightness = -1);
 
 private:
     void realign();

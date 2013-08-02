@@ -39,13 +39,10 @@ public:
 		Backlight(QString name, QObject *parent = 0);
 		~Backlight();
 
-		QString getName() { return m_dpy_name; }
-		int getMaxBrightness();
-		int getCurBrightness();
-		void setCurBrightness(int brightness);
-
-protected:
-	char    *m_dpy_name = NULL;
+		virtual QString getName() = 0;
+		virtual int getMaxBrightness() = 0;
+		virtual int getCurBrightness() = 0;
+		virtual void setCurBrightness(int brightness) = 0;
 };
 
 #endif // BACKLIGHT_H
