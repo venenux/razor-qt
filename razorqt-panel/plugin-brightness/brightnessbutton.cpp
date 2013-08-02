@@ -123,5 +123,5 @@ void BrightnessButton::hideBrightnessSlider()
 
 void BrightnessButton::handleStockIconChanged(const QString &iconName)
 {
-    setIcon(XdgIcon::fromTheme(iconName));
+    setIcon(XdgIcon::fromTheme(iconName, iconName+"-symbolic"));
 }
