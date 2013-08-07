@@ -55,6 +55,7 @@ class RazorBrightness : public QObject, public IRazorPanelPlugin
 
 	protected slots:
 		virtual void settingsChanged();
+		void handleDeviceBrightnessChanged();
 		void showMessage();
 
 	private:

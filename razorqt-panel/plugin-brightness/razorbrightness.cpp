@@ -66,6 +66,7 @@ RazorBrightness::RazorBrightness(const IRazorPanelPluginStartupInfo &startupInfo
     if (m_keyBrightnessUp)
     {
         connect(m_keyBrightnessUp, SIGNAL(activated()), m_brightnessButton->brightnessPopup(), SLOT(handleDeviceBrightnessChanged()));
+        connect(m_keyBrightnessUp, SIGNAL(activated()), this, SLOT(handleDeviceBrightnessChanged()));
 
         if (m_keyBrightnessUp->shortcut().isEmpty())
         {
@@ -81,6 +82,7 @@ RazorBrightness::RazorBrightness(const IRazorPanelPluginStartupInfo &startupInfo
     if (m_keyBrightnessDown)
     {
         connect(m_keyBrightnessDown, SIGNAL(activated()), m_brightnessButton->brightnessPopup(), SLOT(handleDeviceBrightnessChanged()));
+        connect(m_keyBrightnessDown, SIGNAL(activated()), this, SLOT(handleDeviceBrightnessChanged()));
 
         if (m_keyBrightnessDown->shortcut().isEmpty())
         {
@@ -115,6 +117,12 @@ void RazorBrightness::settingsChanged()
     m_volumeButton->setMuteOnMiddleClick(settings()->value(SETTINGS_MUTE_ON_MIDDLECLICK, SETTINGS_DEFAULT_MUTE_ON_MIDDLECLICK).toBool());
     m_volumeButton->setMixerCommand(settings()->value(SETTINGS_MIXER_COMMAND, SETTINGS_DEFAULT_MIXER_COMMAND).toString());
     m_volumeButton->volumePopup()->setSliderStep(settings()->value(SETTINGS_STEP, SETTINGS_DEFAULT_STEP).toInt());*/
+}
+
+void RazorBrightness::handleDeviceBrightnessChanged()
+{
+	m_notification->setSummary(tr("Brightness: %1").arg(QString::number(m_brightnessButton->brightnessPopup()->brightnessSlider()->value())));
+	m_notification->update();
 }
 
 QWidget *RazorBrightness::widget()
