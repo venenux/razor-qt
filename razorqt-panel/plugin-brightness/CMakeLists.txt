@@ -36,8 +36,8 @@ set(UIS
     #razorbrightnessconfiguration.ui
 )
 
-message("brightness: ${X11_LIB} ${XRANDR_LIB}")
-LINK_LIBRARIES(${PLUGIN} ${X11_LIB} "/usr/lib/libXrandr.so.2")
+include_directories(${X11_X11_INCLUDE_PATH} ${X11_Xrandr_INCLUDE_PATH})
+LINK_LIBRARIES(${PLUGIN} ${X11_X11_LIB} ${X11_Xrandr_LIB})
 
 set(LIBRARIES ${LIBRARIES} razor-global-key-shortcuts-client )
 
