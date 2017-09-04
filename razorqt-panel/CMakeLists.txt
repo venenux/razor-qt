@@ -45,6 +45,8 @@ setByDefault(WORLDCLOCK_PLUGIN     Yes)
 setByDefault(TEATIME_PLUGIN        No)
 
 setByDefault(DOM_PLUGIN            Yes)
+
+setByDefault(BRIGHTNESS_PLUGIN     Yes)
 # *******************************************************************
 
 
@@ -72,6 +74,26 @@ add_subdirectory(panel)
 
 
 set(ENABLED_PLUGINS)
+
+if (BRIGHTNESS_PLUGIN)
+	FIND_LIBRARY(X11_LIB X11)
+	FIND_LIBRARY(XRANDR Xrandr)
+
+	if ( NOT(${X11_X11_LIB} MATCHES "NOTFOUND" ) )
+		if ( NOT(${X11_Xrandr_LIB} MATCHES "NOTFOUND") )
+			set(ENABLED_PLUGINS ${ENABLED_PLUGINS}   "Brightness")
+			add_subdirectory(plugin-brightness)
+		else ()
+			message(STATUS "")
+			message(STATUS "Brightness plugin requires libXrandr")
+			message(STATUS "")
+		endif ( NOT(${X11_Xrandr_LIB} MATCHES "NOTFOUND"))
+	else ()
+		message(STATUS "")
+		message(STATUS "Brightness plugin requires libX11")
+		message(STATUS "")
+	endif ( NOT(${X11_X11_LIB} MATCHES "NOTFOUND" ) )
+endif (BRIGHTNESS_PLUGIN)
 
 if (CLOCK_PLUGIN)
   set(ENABLED_PLUGINS ${ENABLED_PLUGINS}  "Clock")
