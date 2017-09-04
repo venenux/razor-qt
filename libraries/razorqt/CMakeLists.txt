@@ -1,4 +1,7 @@
 project(librazorqt)
+
+OPTION(ENABLE_CONSOLEKIT "Enable ConsoleKit usage" ON)
+
 find_package(X11 REQUIRED)
 
 include_directories (
@@ -117,6 +120,9 @@ razor_translate_ts(RAZORQT_QM_FILES
 
 #************************************************
 
+if (ENABLE_CONSOLEKIT)
+    add_definitions(-DCONSOLEKIT_ENABLED)
+endif (ENABLE_CONSOLEKIT)
 
 QT4_WRAP_CPP(MOCS ${razorqt_MOCS})
 QT4_WRAP_UI(UIS ${razorqt_UIS})
